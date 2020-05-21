@@ -6,24 +6,24 @@
 
 - 리턴되는 데이터의 타입에 따른 MessageConverter에 의해 변환이 이뤄진 이후 쓰여진다.
 
-객체 : MappingJacksonHttpMessageConverter
+- 객체 : MappingJacksonHttpMessageConverter
 
-String : StringHttpMessageConverter
+- String : StringHttpMessageConverter
 
 - 객체타입의 경우 MappingJacksonHttpMessageConverter에 의해 필드 값이 JSON형태로 변환된다.
 
 - MappingJacksonHttpMessageConverter : {클래스의 필드 : 해당 필드의 getter()메소드의 값} 을 맵핑시켜준다.
 
-전달되는 Content-Type은 application/json;charset=UTF-8 이다.
+- 전달되는 Content-Type은 application/json;charset=UTF-8 이다.
 
 - 객체를 리턴하는 메소드에서 @ResponseBody를 제거하고 실행했더니 맵핑된 url의 path를 view의 jsp파일에서 찾지 못했다는 404에러가 발생한다. 
 
 - StringHttpMessageConverter : 리턴되는 String을 그대로 Response Body에 싣는다.
 
-전달되는 Content-Type은 text/plain;charset=ISO-8859-1 이다.
+- 전달되는 Content-Type은 text/plain;charset=ISO-8859-1 이다.
 
 
-과정
+#### 과정
 
 Controller의 메소드의 return되는 값 -> message converter에서 response body에 쓰여지는 데이터로 변환 -> 브라우저로 전송
 
@@ -56,10 +56,10 @@ Controller의 메소드의 return되는 값 -> message converter에서 response 
 
 ex)
 
-public class A{
-
-   Stirng name = "yoo";
-}
+	public class A{
+	
+	   Stirng name = "yoo";
+	}
 
 
 // 같은 패키지에 있는 클래스
@@ -96,36 +96,27 @@ private -> default -> protected -> public 순으로 보다 많은 접근을 허�
 
 #### 필드 값에 private을 사용하는 이유
 
-1. 프로그램이 실행중일 때 임의로 수정되는 것을 방지하기 위해(실행 전 다른 프로그래머들에 의해 수정되는 것이 아니라)
+- 프로그램이 실행중일 때 임의로 수정되는 것을 방지하기 위해(실행 전 다른 프로그래머들에 의해 코드가 수정되는 것이 아니라)
 
-- 사용하는 사람(고객)의 입장에서 원하는 값을 얻기 위해 내부적으로 변수/메소드들이 어떻게 조작되는지 알 필요가 없기 때문에
-
-
-1. DTO 인스턴스 경우 DB의 데이터가 setter를 통해 초기화되었는데 이를 임의로 조작하면 안되기 때문에 사용
-
-2. 특정 필드 값이 가지면 안되는 값(ex)음수가 되면 안됌)의 경우 직접 접근하지 못하고 setter에서 해당 값이 될 수 없도록 막을 수 있다.
+- 특정 필드 값이 가지면 안되는 값(ex)음수가 되면 안됌)의 경우 직접 접근하지 못하고 setter에서 해당 값이 될 수 없도록 막을 수 있다.
 
 --- 
 
 
 ####  DAO / DTO 차이
 
-DAO(Data Access Object)
-
+##### DAO(Data Access Object)
+ 
 - DB와의 연결을 담당하는 클래스
 
 - SqlSession을 통해 DB에 접근한다.
 
 
-DTO(Data Transfer Object)
+##### DTO(Data Transfer Object)
 
 - 하나의 레코드를 하나의 클래스에 매칭시켜 정의한 클래스
 
 - DAO의 특정 메소드를 통해 받아오는 레코드와 매칭되어있다.
-
----
-
-####  service인터페이스 만드는 건 옛날 방식(형 소스(카카오톡에 보내준 URL) 참고해서 소스 수정해보자)
 
 ---
 
