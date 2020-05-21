@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yoo.dto.RandomDTO;
 import com.yoo.service.RandomService;
@@ -18,17 +19,30 @@ import com.yoo.service.RandomService;
 /**
  * Handles requests for the application home page.
  */
+//@Component
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	
+// 구현체가 여러 개 있는 경우
+	
+//	@Autowired
+//	@Qualifier("random1")
+//	private RandomService randomService; 
+	
+	
+	
+	private final RandomService randomService;
 	
 	@Autowired
-	RandomService randomService;
+	public HomeController(RandomService randomService) {
+		
+		this.randomService = randomService;
+	}
+	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -45,18 +59,35 @@ public class HomeController {
 		return "home";
 	}
 	
+	
+	@ResponseBody
 	@RequestMapping(value = "/random")
 	public RandomDTO showRandomNumber() {
 		
-		RandomDTO dto = new RandomDTO();
+		return randomService.getRandomNumber();
 		
-		dto.setCurrentTime(randomService.getCurrentTime());
-		dto.setRandomNumber(randomService.getRandomNumber());
+	}
+
+	
+	// @ReseponseBody를 제거했을 때 test (404에러 발생)
+	
+	@RequestMapping(value = "/random2")
+	public RandomDTO showRandomNumber2() {
 		
-		return dto;
+		return randomService.getRandomNumber();
 		
 	}
 	
 	
-
+	// String을 response body에 올려 보낼 때
+	
+	@ResponseBody
+	@RequestMapping(value = "/string")
+	public String showString() {
+		
+		return "hahahoho";
+		
+	}
+	
+	
 }

@@ -1,10 +1,9 @@
 package com.yoo.service;
 
-import java.sql.Timestamp;
+import com.yoo.dto.RandomDTO;
 
 public interface RandomService {
 	
-	public int getRandomNumber();
-	public Timestamp getCurrentTime();
+	public RandomDTO getRandomNumber();
 
 }
